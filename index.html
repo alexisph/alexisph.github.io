@@ -1,139 +1,76 @@
-<!DOCTYPE html>
-
 <html>
   <head>
-    <title>Alexander Phinikarides &hearts; Open Source</title>
-    <link rel="stylesheet" type="text/css" href="assets/reset.css">
-    <link rel="stylesheet" type="text/css" href="assets/grid.css">
-    <link rel="stylesheet" type="text/css" href="assets/style.css">
-    <script type="text/javascript" src="assets/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="assets/strftime.js"></script>
-    <script type="text/javascript">
-    (function ($, undefined) {
-
-      // Put custom repo URL's in this object, keyed by repo name.
-      var repoUrls = {
-      };
-      // Put custom repo descriptions in this object, keyed by repo name.
-      var repoDescriptions = {
-      };
-
-      function repoUrl(repo) {
-        return repoUrls[repo.name] || repo.html_url;
-      }
-      function repoDescription(repo) {
-        return repoDescriptions[repo.name] || repo.description;
-      }
-
-      function addRecentlyUpdatedRepo(repo) {
-        var $item = $("<li>");
-
-        var $name = $("<a>").attr("href", repo.html_url).text(repo.name);
-        $item.append($("<span>").addClass("name").append($name));
-
-        var $time = $("<a>").attr("href", repo.html_url + "/commits").text(strftime("%h %e, %Y", repo.pushed_at));
-        $item.append($("<span>").addClass("time").append($time));
-
-        $item.append('<span class="bullet">&sdot;</span>');
-
-        var $watchers = $("<a>").attr("href", repo.html_url + "/watchers").text(repo.watchers + " watchers");
-        $item.append($("<span>").addClass("watchers").append($watchers));
-
-        $item.append('<span class="bullet">&sdot;</span>');
-
-        var $forks = $("<a>").attr("href", repo.html_url + "/network").text(repo.forks + " forks");
-        $item.append($("<span>").addClass("forks").append($forks));
-
-        $item.appendTo("#recently-updated-repos");
-      }
-
-      function addRepo(repo) {
-        var $item = $("<li>").addClass("repo grid-1 " + (repo.language || '').toLowerCase());
-        var $link = $("<a>").attr("href", repoUrl(repo)).appendTo($item);
-        $link.append($("<h2>").text(repo.name));
-        $link.append($("<h3>").text(repo.watchers + " watchers" + " / " + repo.forks + " forks"));
-        $link.append($("<p>").text(repoDescription(repo)));
-        $link.append($("<p>").text("Updated " + 
-          strftime("%h %e, %Y", repo.pushed_at)));
-        $link.append($("<h3>").addClass("language").text(repo.language));
-        
-        $item.appendTo("#repos");
-      }
-
-      $.getJSON("https://api.github.com/users/alexisph/repos?per_page=100&callback=?", function (result) {
-        var repos = result.data;
-
-        $(function () {
-          $("#num-repos").text(repos.length);
-
-          // Convert pushed_at to Date.
-          $.each(repos, function (i, repo) {
-            repo.pushed_at = new Date(repo.pushed_at);
-
-            var weekHalfLife  = 1.146 * Math.pow(10, -9);
-
-            var pushDelta    = (new Date) - Date.parse(repo.pushed_at);
-            var createdDelta = (new Date) - Date.parse(repo.created_at);
-
-            var weightForPush = 1;
-            var weightForWatchers = 1.314 * Math.pow(10, 7);
-
-            repo.hotness = weightForPush * Math.pow(Math.E, -1 * weekHalfLife * pushDelta);
-            repo.hotness += weightForWatchers * repo.watchers / createdDelta;
-          });
-
-          // Sort by highest # of watchers.
-          repos.sort(function (a, b) {
-            if (a.hotness < b.hotness) return 1;
-            if (b.hotness < a.hotness) return -1;
-            return 0;
-          });
-
-          $.each(repos, function (i, repo) {
-            addRepo(repo);
-          });
-
-          // Sort by most-recently pushed to.
-          repos.sort(function (a, b) {
-            if (a.pushed_at < b.pushed_at) return 1;
-            if (b.pushed_at < a.pushed_at) return -1;
-            return 0;
-          });
-
-          $.each(repos.slice(0, 3), function (i, repo) {
-            addRecentlyUpdatedRepo(repo);
-          });
-        });
-      });
-
-    })(jQuery);
-    </script>
+    <title>Albert Einstein's Example Publication Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />    
   </head>
+
+
   <body>
-    <div id="wrapper" class="grid clearfix">
-      <div id="main" class="grid-1">
-        <div><h1>Alexander Phinikarides's github repos</h1></div>
-        <p>This is an index to my repos on github</p>
-        <p>Page based on <a href="http://twitter.github.com/">http://twitter.github.com/</a></p>
+    <a href="https://github.com/BibBase/bibbase.github.io">
+      <img style="position: absolute; top: 0; right: 0; border: 0;" 
+           src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+           alt="Fork me on GitHub" 
+           data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+    </a>
+
+    <div class="row">
+      <div class="col-md-4">
+        <img style="width: 100%" src="picture.png"/>
+
+        <h2>Prof. Albert Einstein</h2>
+
+        <br>
+
+        <a href="https://www.ias.edu/">Institute for Advanced Study</a>,<br/>
+        1 Einstein Drive<br/>
+        Princeton, N.J. 08540<br/>
+        U.S.A.<br/>
+        <br/>
+
+        <p>
+          Links:
+          <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Albert_Einstein">@Wikipedia</a></li>
+            <li><a href="http://www.nobelprize.org/nobel_prizes/physics/laureates/1921/einstein-facts.html"
+                   >@Nobelprize.org</a></li>
+            <li><a href="https://www.britannica.com/biography/Albert-Einstein">@Britannica.com</a></li>
+          </ul>
+        </p>
+        <div class="spacer">
+
+        </div>
+      </div>
+      
+      <!-- .................................. -->
+      
+      <div class="col-md-8">
+        Citing <a href="https://en.wikipedia.org/wiki/Albert_Einstein">Wikipedia</a>:
+        <blockquote cite="https://en.wikipedia.org/wiki/Albert_Einstein"
+                    style="max-width: 80%">
+          Albert Einstein (14 March 1879 – 18 April 1955) was a
+          German-born theoretical physicist. He developed the
+          general theory of relativity, one of the two pillars of
+          modern physics (alongside quantum mechanics). Einstein's
+          work is also known for its influence on the philosophy of
+          science. Einstein is best known in popular culture for his
+          mass–energy equivalence formula E = mc<sup>2</sup> (which
+          has been dubbed "the world's most famous equation"). He
+          received the 1921 Nobel Prize in Physics for his "services
+          to theoretical physics", in particular his discovery of
+          the law of the photoelectric effect, a pivotal step in the
+          evolution of quantum theory.
+        </blockquote>
+
+        <hr>
+
+        <h2>Publications</h2>
+
+        <script src="https://bibbase.org/show?bib=https://bibbase.github.io/einstein.bib&jsonp=1"></script>
 
       </div>
-
-      <div class="grid grid-3">
-        <div id="statistics" class="grid-1 alpha header">
-          <h1>Statistics</h1>
-          <p>
-            <a href="https://github.com/alexisph/repositories"><span id="num-repos">&nbsp;</span> public repos</a>
-            <br>
-          </p>
-        </div>
-
-        <div id="recently-updated" class="grid-2 omega header">
-          <h1>Recently updated <a href="https://github.com/alexisph/repositories">View All on GitHub</a></h1>
-          <ol id="recently-updated-repos"></ol>
-        </div>
-      </div>
-
-      <ol id="repos"></ol>
     </div>
+
   </body>
 </html>
