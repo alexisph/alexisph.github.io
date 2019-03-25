@@ -2,5 +2,5 @@
 
 http://alexisph.github.io
 
-Publication page for Alexander Phinikarides.
+About page for Alexander Phinikarides.
 
